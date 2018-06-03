@@ -38,6 +38,7 @@ type Server struct {
 	middlewares   []middleware.Middleware
 }
 
+
 // New returns a new instance of the server based on the specified configuration.
 // It allocates resources which will be needed for ServeAPI(ports, unix-sockets).
 func New(cfg *Config) *Server {

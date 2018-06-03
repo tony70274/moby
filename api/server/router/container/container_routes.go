@@ -24,6 +24,51 @@ import (
 	"golang.org/x/net/websocket"
 )
 
+
+
+
+
+
+
+func (s *containerRouter) postContainersFDS(ctx context.Context, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
+	if err := httputils.ParseForm(r); err != nil {
+		return err
+	}
+
+	println("In the func of postContainerFDS")
+	policy ,_ := strconv.Atoi(r.Form.Get("policy"))
+	policyOption := &types.ContainerFDSOptions{
+		Policy:  policy,
+	}
+
+	err2 := s.backend.ContainerFDS(policyOption)
+	if err2 != nil {
+		println("err2 Fail")
+	}
+/*
+	var updateConfig container.UpdateConfig
+
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&updateConfig); err != nil {
+		return err
+	}
+
+	hostConfig := &container.HostConfig{
+		Resources:     updateConfig.Resources,
+		RestartPolicy: updateConfig.RestartPolicy,
+	}
+
+	name := vars["name"]
+	resp, err := s.backend.ContainerUpdate(name, hostConfig)
+	if err != nil {
+		return err
+	}
+*/
+	return httputils.WriteJSON(w, http.StatusOK, nil)
+}
+
+
+
 func (s *containerRouter) postCommit(ctx context.Context, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
 	if err := httputils.ParseForm(r); err != nil {
 		return err
