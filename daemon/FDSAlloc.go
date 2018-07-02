@@ -92,3 +92,31 @@ func cleanScreen(){
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }
+func (daemon *Daemon) getContainerResource() ([]*container.Container,error) {
+	var(
+	containerInfo = []*container.Container{}
+	)
+	containers ,err := daemon.Containers(&types.ContainerListOptions{})
+	if err != nil{
+		println("Get ContainerList error")
+		return nil,err
+	}else{
+		println("Get ContainerList")
+	}
+	for _, container := range containers{
+		tmp, err := daemon.GetContainer(container.ID)
+	//println(&tmp)
+		println(tmp.HostConfig.Resources.CPUPeriod)
+		if err != nil{
+			println("Get ContainerInfo error")
+			return nil,nil
+		}else{
+			println("Get ContainerInfo")
+		}
+	containerInfo = append(containerInfo,tmp)
+	println("Info: ",&containerInfo)
+
+	}
+
+
+}

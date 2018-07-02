@@ -109,36 +109,21 @@ func (s *containerRouter) postCommit(ctx context.Context, w http.ResponseWriter,
 }
 
 func (s *containerRouter) getContainersResource(ctx context.Context, w http.ResponseWriter, r *http.Request, vars map[string]string) error{
-	var(
-	containerInfo = []*containerpkg.Container{}
-	)
 	if err := httputils.ParseForm(r); err != nil {
 		return err
 	}
-	println("getContainersResource func is ok!!")
-	containers ,err := s.backend.Containers(&types.ContainerListOptions{})
-	if err != nil{
-		println("Get ContainerList error")
-		return nil
+	containers, err := s.backend.getContainerResource()
+	if err != nil {
+		println("Get Resource Error!")
 	}else{
-		println("Get ContainerList")
-	}
-
-	for _, container := range containers{
-		tmp, err := s.backend.GetContainer(container.ID)
-		println(tmp.HostConfig.Resources.CPUPeriod)
-		if err != nil{
-			println("Get ContainerInfo error")
-			return nil
-		}else{
-			println("Get ContainerInfo")
-		}
-		containerInfo = append(containerInfo,tmp)
-
+		println("Get Resource")
 	}
 
 
-	return nil
+
+
+
+	return httputils.WriteJSON(w, http.StatusOK, containers)
 }
 
 
