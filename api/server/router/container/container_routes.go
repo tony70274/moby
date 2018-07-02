@@ -108,6 +108,16 @@ func (s *containerRouter) postCommit(ctx context.Context, w http.ResponseWriter,
 	return httputils.WriteJSON(w, http.StatusCreated, &types.IDResponse{ID: imgID})
 }
 
+func (s *containerRouter) getContainersResource(ctx context.Context, w http.ResponseWriter, r *http.Request, vars map[string]string) error{
+	if err := httputils.ParseForm(r); err != nil {
+		return err
+	}
+	println("getContainersResource func is ok!!")
+	return nil
+
+}
+
+
 func (s *containerRouter) getContainersJSON(ctx context.Context, w http.ResponseWriter, r *http.Request, vars map[string]string) error {
 	if err := httputils.ParseForm(r); err != nil {
 		return err
