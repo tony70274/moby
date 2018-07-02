@@ -92,6 +92,7 @@ func cleanScreen(){
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 }
+/*
 func (daemon *Daemon) getContainerResource() ([]*container.Container,error) {
 	var(
 	containerInfo = []*container.Container{}
@@ -120,3 +121,4 @@ func (daemon *Daemon) getContainerResource() ([]*container.Container,error) {
 
 
 }
+*/
